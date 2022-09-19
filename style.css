@@ -1,44 +1,82 @@
-html{
-    font-family: Helvetica, sans-serif;
+html {
+  font-family: Helvetica, sans-serif;
+  font-weight: 700;
+  color: #fff;
 }
 body {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #8d8565;
 }
-h1{
-    text-align: center;
-    margin-top: 10px ;
-    font-size: 40px;
+h1 {
+  text-shadow: 2px 2px 2px black;
+  font-size: 40px;
+}
+.container {
+  gap: 4rem;
+  justify-content: center;
+  height: 100vh;
+  /* min-height: calc(100vh - 25px); */
+  min-width: 35rem;
+}
+.sudoku-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20%;
 }
 .sudoku-board,
-.sudoku-solve-btn{
-    display: flex;
+.sudoku-solve-btn {
+  display: flex;
 }
-.sudoku-board *{
-    display: flex;
+.sudoku-board * {
+  display: flex;
 }
-/* .sudoku-board::before,
-.sudoku-board::after{
-    content: "";
-    background: #303443;
-    width: 400px;
-    height: 100%;
-} */
-.sudoku-board{
-    margin: 25px auto;
-    background-color: #303443;
-    width: 550px;
-    height: 550px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-content: space-around;
+.sudoku-board {
+  margin: 0 auto;
+  background-color: #433f30;
+  width: 35rem;
+  height: 35rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: space-around;
+  box-shadow: 0 0 0 100vmax #433f30;
+  clip-path: inset(0 -100vmax);
 }
-.sudoku-solve-btn{
-    margin: 0 auto;
+.sudoku-solve-btn {
+  text-shadow: 2px 2px 2px black;
+  border: solid 1px black;
+  background-color: #303443;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 25px;
+  font-size: 24px;
+  padding: 5px 20px;
+  margin: 25px auto;
+  box-shadow: 0px 10px 13px -7px #000000, -50px 0px 0px 0px rgba(0, 0, 0, 0);
 }
-input{
-    width: 50px;
-    height: 50px;
-    font-size: 40px;
-    text-align: right;
+input {
+  width: 50px;
+  height: 50px;
+  font-size: 40px;
+  text-align: right;
+}
+a {
+  display: flex;
+  color: #fff;
+  margin: 5rem auto;
+  width: 5rem;
+  text-decoration: none;
+  flex-direction: row;
+  /* align-items: center; */
+  justify-content: center;
+}
+i {
+  font-size: 5rem;
+}
+
+@media screen and (min-width: 570px) {
+  .sudoku-nav {
+    height: 70px;
+  }
 }

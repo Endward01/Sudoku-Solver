@@ -54,6 +54,7 @@ const solve = function () {
   axios
     .request(options)
     .then(function (response) {
+      console.log(response)
       populateValues(response.data.answer);
     })
     .catch(function (error) {
