@@ -3,20 +3,20 @@ const sudokuBtn = document.querySelector("#sudoku-solve-btn");
 const sudokuInput = [];
 const squers = 81;
 
-// for (let i = 0; i < squers; i++) {
-//   const inputElement = document.createElement("input");
-//   // inputElement.setAttribute('id', 'input');
-//   inputElement.setAttribute("maxlength", "1");
-//   inputElement.setAttribute(
-//     "oninput",
-//     "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-//   );
-//   inputElement.setAttribute("type", "number");
-//   inputElement.setAttribute("min", "1");
-//   inputElement.setAttribute("max", "9");
+for (let i = 0; i < squers; i++) {
+  const inputElement = document.createElement("input");
+  // inputElement.setAttribute('id', 'input');
+  inputElement.setAttribute("maxlength", "1");
+  inputElement.setAttribute(
+    "oninput",
+    "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+  );
+  inputElement.setAttribute("type", "number");
+  inputElement.setAttribute("min", "1");
+  inputElement.setAttribute("max", "9");
 
-//   sudokuBoard.appendChild(inputElement);
-// }
+  sudokuBoard.appendChild(inputElement);
+}
 
 const sudokuArray = function () {
   const inputs = document.querySelectorAll("input");
@@ -54,7 +54,7 @@ const solve = function () {
   axios
     .request(options)
     .then(function (response) {
-      console.log(response)
+      console.log(response);
       populateValues(response.data.answer);
     })
     .catch(function (error) {
