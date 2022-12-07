@@ -1,4 +1,3 @@
 # Sudoku-Solver
 
-
-https://glistening-longma-546e12.netlify.app
+A simple application that solves a correctly given sudoku puzzle for you.
