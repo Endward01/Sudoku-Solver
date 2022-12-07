@@ -1,5 +1,9 @@
 const sudokuBoard = document.querySelector(".sudoku-board");
 const sudokuBtn = document.querySelector(".sudoku-solve-btn");
+const alert = document.querySelector(".alert");
+document.querySelector(".alert-btn").addEventListener("click", () => {
+  alert.setAttribute("data-active", "false");
+});
 const squers = 81;
 let finaleAnswer = [];
 
@@ -20,23 +24,25 @@ for (let i = 0; i < squers; i++) {
   });
 }
 
-function sliceArr(elem) {
+const sliceArr = (elem) => {
   const res = [];
   for (let i = 0; i < elem.length; i += 9) {
     const chunk = elem.slice(i, i + 9);
     res.push(chunk);
   }
   return res;
-}
-function joinArr(elem) {
-  let res = [];
-  for (let i = 0; i < elem.length; i++) {
-    res = elem[i].join(elem[i]);
-  }
-  return res;
-}
+};
 
-const sudokuArray = function () {
+const joinArr = (elem) => {
+  let res = [];
+  elem.forEach((elem, i) => {
+    res = elem[i].join(elem[i]);
+  });
+
+  return res;
+};
+
+const sudokuArray = () => {
   const inputs = document.querySelectorAll(".number-input");
   const sudokuInput = [];
   inputs.forEach((elem) => {
@@ -48,13 +54,18 @@ const sudokuArray = function () {
   });
   const slicedArr = sliceArr(sudokuInput);
   const answer = solve(slicedArr);
-  finaleAnswer = answer.flat(1);
+  if (answer.length === 9) {
+    finaleAnswer = answer.flat(1);
+  } else {
+    alert.setAttribute("data-active", "true");
+  }
   populateValues(finaleAnswer);
 };
-const populateValues = function (answer) {
+
+const populateValues = (answer) => {
   const inputs = document.querySelectorAll("input");
   if (answer) {
-    inputs.forEach(function (inputs, i) {
+    inputs.forEach((inputs, i) => {
       inputs.value = answer[i];
     });
   }
@@ -62,34 +73,34 @@ const populateValues = function (answer) {
 
 sudokuBtn.addEventListener("click", sudokuArray);
 
-const solve = (board) => {
-  if (solved(board)) {
-    return board;
+const solve = (elem) => {
+  if (solved(elem)) {
+    return elem;
   } else {
-    const possibilities = nextBoards(board);
-    const validBoards = keepOnlyValid(possibilities);
-    return searchForSolution(validBoards);
+    const possib = nextBoards(elem);
+    const valid = keepOnlyValid(possib);
+    return searchForSolution(valid);
   }
 };
 
-const searchForSolution = (boards) => {
-  if (boards.length < 1) {
+const searchForSolution = (elem) => {
+  if (elem.length < 1) {
     return false;
   } else {
-    let first = boards.shift();
+    let first = elem.shift();
     const tryPath = solve(first);
     if (tryPath != false) {
       return tryPath;
     } else {
-      return searchForSolution(boards);
+      return searchForSolution(elem);
     }
   }
 };
 
-const solved = (board) => {
+const solved = (elem) => {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
-      if (board[i][j] == 0) {
+      if (elem[i][j] == 0) {
         return false;
       }
     }
@@ -97,76 +108,77 @@ const solved = (board) => {
   return true;
 };
 
-const nextBoards = (board) => {
+const nextBoards = (elem) => {
   let res = [];
-  const firstEmpty = findEmptySquare(board);
+  const firstEmpty = findEmptySquare(elem);
   if (firstEmpty != undefined) {
     const y = firstEmpty[0];
     const x = firstEmpty[1];
     for (let i = 1; i <= 9; i++) {
-      let newBoard = [...board];
-      let row = [...newBoard[y]];
+      let newElem = [...elem];
+      let row = [...newElem[y]];
       row[x] = i;
-      newBoard[y] = row;
-      res.push(newBoard);
+      newElem[y] = row;
+      res.push(newElem);
     }
   }
   return res;
 };
 
-const findEmptySquare = (board) => {
+const findEmptySquare = (elem) => {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
-      if (board[i][j] == 0) {
+      if (elem[i][j] == 0) {
         return [i, j];
       }
     }
   }
 };
 
-const keepOnlyValid = (boards) => {
-  var res = [];
-  for (let i = 0; i < boards.length; i++) {
-    if (validBoard(boards[i])) {
-      res.push(boards[i]);
+const keepOnlyValid = (elem) => {
+  let res = [];
+  elem.forEach((elem) => {
+    if (validBoard(elem)) {
+      res.push(elem);
     }
-  }
+  });
   return res;
 };
-const validBoard = (board) => {
-  return rowGood(board) && columnGood(board) && boxesGood(board);
+
+const validBoard = (elem) => {
+  return rowGood(elem) && columnGood(elem) && boxesGood(elem);
 };
 
-const rowGood = (board) => {
+const rowGood = (elem) => {
   for (let i = 0; i < 9; i++) {
     let cur = [];
     for (let j = 0; j < 9; j++) {
-      if (cur.includes(board[i][j])) {
+      if (cur.includes(elem[i][j])) {
         return false;
-      } else if (board[i][j] != 0) {
-        cur.push(board[i][j]);
+      } else if (elem[i][j] != 0) {
+        cur.push(elem[i][j]);
       }
     }
   }
   return true;
 };
 
-const columnGood = (board) => {
+const columnGood = (elem) => {
   for (let i = 0; i < 9; i++) {
     let cur = [];
     for (let j = 0; j < 9; j++) {
-      if (cur.includes(board[j][i])) {
+      if (cur.includes(elem[j][i])) {
         return false;
-      } else if (board[j][i] != 0) {
-        cur.push(board[j][i]);
+      } else if (elem[j][i] != 0) {
+        cur.push(elem[j][i]);
       }
     }
   }
   return true;
 };
 
-const boxesGood = (board) => {
-  const boxCoordinates = [
+const boxesGood = (elem) => {
+  const boxCoord = [
     [0, 0],
     [0, 1],
     [0, 2],
@@ -182,13 +194,13 @@ const boxesGood = (board) => {
     for (let x = 0; x < 9; x += 3) {
       let cur = [];
       for (let i = 0; i < 9; i++) {
-        let coordinates = [...boxCoordinates[i]];
-        coordinates[0] += y;
-        coordinates[1] += x;
-        if (cur.includes(board[coordinates[0]][coordinates[1]])) {
+        let cord = [...boxCoord[i]];
+        cord[0] += y;
+        cord[1] += x;
+        if (cur.includes(elem[cord[0]][cord[1]])) {
           return false;
-        } else if (board[coordinates[0]][coordinates[1]] != 0) {
-          cur.push(board[coordinates[0]][coordinates[1]]);
+        } else if (elem[cord[0]][cord[1]] != 0) {
+          cur.push(elem[cord[0]][cord[1]]);
         }
       }
     }

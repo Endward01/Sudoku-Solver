@@ -3,6 +3,7 @@
   font-family: "Open Sans", sans-serif;
 }
 body {
+  position: relative;
   box-sizing: border-box;
   background-color: #222222;
   width: 100vw;
@@ -34,7 +35,8 @@ h1 {
   justify-content: center;
   align-content: center;
 }
-.sudoku-solve-btn {
+.sudoku-solve-btn,
+.alert-btn {
   cursor: pointer;
   width: 95%;
   background-color: #434242;
@@ -42,15 +44,20 @@ h1 {
   color: #fff;
   font-size: 24px;
   margin: 2rem;
-
   border: solid 3px #434242;
   transition: 100ms border ease-in-out;
 }
-.sudoku-solve-btn:hover {
+.alert>.alert-btn{
+  width: 75%;
+  margin-bottom: .5rem;
+}
+.sudoku-solve-btn:hover,
+.alert-btn:hover {
   border-color: #22a39f;
   transition: 100ms border ease-in-out;
 }
-.sudoku-solve-btn:active {
+.sudoku-solve-btn:active,
+.alert-btn:active {
   background-color: #22a39f;
 }
 input {
@@ -88,11 +95,35 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.alert[data-active="false"] {
+  transform: translateY(-500%);
+  transition: 300ms transform ease-in-out;
+}
+.alert[data-active="true"] {
+  transform: translateY(110%);
+  transition: 300ms transform ease-in-out;
+}
+.alert {
+  background-color: #222222;
+  width: 96%;
+  top: 0;
+  position: absolute;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 1rem;
+}
 
 @media (min-width: 992px) {
   .sudoku-board,
   .sudoku-solve-btn {
     width: 35rem;
+  }
+  .alert-btn {
+    width: 15rem;
+    margin: 1.5rem 0;
+    margin-bottom: .25rem;
   }
   .sudoku-solve-btn {
     margin: 1.5rem 0;
@@ -100,5 +131,11 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   i {
     font-size: 2rem;
+  }
+  .alert {
+    width: 35rem;
+  }
+  .alert[data-active="true"] {
+    transform: translateY(215%);
   }
 }
